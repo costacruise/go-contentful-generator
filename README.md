@@ -29,7 +29,8 @@ $ export CONTENTFUL_SPACE_ID=awesome-space
 $ export CONTENTFUL_AUTH_TOKEN=secret-token
 ```
 
-the `CONTENTFUL_AUTH_TOKEN` has to be for the [CMA](https://www.contentful.com/developers/docs/references/authentication/#).
+the `CONTENTFUL_AUTH_TOKEN` has to be for [The Content Management API]
+(https://www.contentful.com/developers/docs/references/authentication/#).
 
 Then generate your package: 
 

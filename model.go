@@ -284,7 +284,7 @@ func generateModelType(f *jen.File, m contentfulModel) {
 		jen.Id("c").Op(":=").Id("it.c"),
 		jen.Var().Id("url").Op("=").Qual("fmt", "Sprintf").Params(
 			jen.Lit("%s/spaces/%s/entries?access_token=%s&content_type=%s&include=%d&locale=%s&limit=%d&skip=%d"),
-			jen.Id("c.host"),
+			jen.Id("c.Host"),
 			jen.Id("c.spaceID"),
 			jen.Id("c.authToken"),
 			jen.Lit(m.Sys.ID),

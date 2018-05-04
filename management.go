@@ -10,7 +10,7 @@ import (
 func generateManagementClient(f *jen.File) {
 	f.Comment("ManagementClient implements a space specific contentful client")
 	f.Type().Id("ManagementClient").Struct(
-		jen.Id("host").String(),
+		jen.Id("Host").String(),
 		jen.Id("spaceID").String(),
 		jen.Id("authToken").String(),
 		jen.Id("client").Op("*").Qual("net/http", "Client"),
@@ -24,7 +24,7 @@ func generateManagementClient(f *jen.File) {
 		jen.Id("pool").Op(":=").Qual("crypto/x509", "NewCertPool").Call(),
 		jen.Id("pool").Dot("AppendCertsFromPEM").Call(jen.Index().Byte().Parens(jen.Lit(certs))),
 		jen.Return(jen.Op("&").Id("ManagementClient").Values(jen.Dict{
-			jen.Id("host"):      jen.Qual("fmt", "Sprintf").Params(jen.Lit("https://%s"), jen.Id("contentfulCPAURL")),
+			jen.Id("Host"):      jen.Qual("fmt", "Sprintf").Params(jen.Lit("https://%s"), jen.Id("contentfulCPAURL")),
 			jen.Id("spaceID"):   jen.Lit(os.Getenv("CONTENTFUL_SPACE_ID")),
 			jen.Id("authToken"): jen.Id("authToken"),
 			jen.Id("pool"):      jen.Id("pool"),

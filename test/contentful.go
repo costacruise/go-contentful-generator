@@ -109,7 +109,7 @@ func (it *PostIterator) Next() (*Post, error) {
 }
 func (it *PostIterator) fetch() error {
 	c := it.c
-	var url = fmt.Sprintf("%s/spaces/%s/entries?access_token=%s&content_type=%s&include=%d&locale=%s&limit=%d&skip=%d", c.host, c.spaceID, c.authToken, "2wKn6yEnZewu2SCCkus4as", it.IncludeCount, c.Locale, it.Limit, it.Offset)
+	var url = fmt.Sprintf("%s/spaces/%s/entries?access_token=%s&content_type=%s&include=%d&locale=%s&limit=%d&skip=%d", c.Host, c.spaceID, c.authToken, "2wKn6yEnZewu2SCCkus4as", it.IncludeCount, c.Locale, it.Limit, it.Offset)
 	resp, err := c.client.Get(url)
 	if err != nil {
 		return err
@@ -323,7 +323,7 @@ func (it *AuthorIterator) Next() (*Author, error) {
 }
 func (it *AuthorIterator) fetch() error {
 	c := it.c
-	var url = fmt.Sprintf("%s/spaces/%s/entries?access_token=%s&content_type=%s&include=%d&locale=%s&limit=%d&skip=%d", c.host, c.spaceID, c.authToken, "1kUEViTN4EmGiEaaeC6ouY", it.IncludeCount, c.Locale, it.Limit, it.Offset)
+	var url = fmt.Sprintf("%s/spaces/%s/entries?access_token=%s&content_type=%s&include=%d&locale=%s&limit=%d&skip=%d", c.Host, c.spaceID, c.authToken, "1kUEViTN4EmGiEaaeC6ouY", it.IncludeCount, c.Locale, it.Limit, it.Offset)
 	resp, err := c.client.Get(url)
 	if err != nil {
 		return err
@@ -520,7 +520,7 @@ func (it *CategoryIterator) Next() (*Category, error) {
 }
 func (it *CategoryIterator) fetch() error {
 	c := it.c
-	var url = fmt.Sprintf("%s/spaces/%s/entries?access_token=%s&content_type=%s&include=%d&locale=%s&limit=%d&skip=%d", c.host, c.spaceID, c.authToken, "5KMiN6YPvi42icqAUQMCQe", it.IncludeCount, c.Locale, it.Limit, it.Offset)
+	var url = fmt.Sprintf("%s/spaces/%s/entries?access_token=%s&content_type=%s&include=%d&locale=%s&limit=%d&skip=%d", c.Host, c.spaceID, c.authToken, "5KMiN6YPvi42icqAUQMCQe", it.IncludeCount, c.Locale, it.Limit, it.Offset)
 	resp, err := c.client.Get(url)
 	if err != nil {
 		return err
@@ -734,7 +734,7 @@ func resolveEntry(id entryID, its []includeEntry, includes includes, cache *iter
 
 // ContentClient implements a space specific contentful client
 type ContentClient struct {
-	host      string
+	Host      string
 	spaceID   string
 	authToken string
 	Locale    string
@@ -759,7 +759,7 @@ func NewCDA(authToken string, locale string) *ContentClient {
 		Locale:    locale,
 		authToken: authToken,
 		client:    &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{RootCAs: pool}}},
-		host:      fmt.Sprintf("https://%s", contentfulCDAURL),
+		Host:      fmt.Sprintf("https://%s", contentfulCDAURL),
 		pool:      pool,
 		spaceID:   "ygx37epqlss8",
 	}
@@ -773,7 +773,7 @@ func NewCPA(authToken string, locale string) *ContentClient {
 		Locale:    locale,
 		authToken: authToken,
 		client:    &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{RootCAs: pool}}},
-		host:      fmt.Sprintf("https://%s", contentfulCPAURL),
+		Host:      fmt.Sprintf("https://%s", contentfulCPAURL),
 		pool:      pool,
 		spaceID:   "ygx37epqlss8",
 	}
@@ -781,7 +781,7 @@ func NewCPA(authToken string, locale string) *ContentClient {
 
 // ManagementClient implements a space specific contentful client
 type ManagementClient struct {
-	host      string
+	Host      string
 	spaceID   string
 	authToken string
 	client    *http.Client
@@ -795,7 +795,7 @@ func NewManagement(authToken string) *ManagementClient {
 	return &ManagementClient{
 		authToken: authToken,
 		client:    &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{RootCAs: pool}}},
-		host:      fmt.Sprintf("https://%s", contentfulCPAURL),
+		Host:      fmt.Sprintf("https://%s", contentfulCPAURL),
 		pool:      pool,
 		spaceID:   "ygx37epqlss8",
 	}

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -51,10 +50,15 @@ func (m contentfulModel) DowncasedName() string {
 }
 
 type contentModelResponse struct {
-	Total int
-	Skip  int
-	Limit int
-	Items []contentfulModel `json:"items"`
+	Sys struct {
+		Type string `json:"type"`
+		ID   string `json:"id"`
+	} `json:"sys"`
+	Message string `json:"message"`
+	Total   int
+	Skip    int
+	Limit   int
+	Items   []contentfulModel `json:"items"`
 }
 
 var (
@@ -73,15 +77,18 @@ func init() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer resp.Body.Close()
 
 	var data contentModelResponse
-	bs, _ := ioutil.ReadAll(resp.Body)
-	if err := json.Unmarshal(bs, &data); err != nil {
+	err = json.NewDecoder(resp.Body).Decode(&data)
+	if err != nil {
 		log.Fatal(err.Error())
 	}
-	if err := resp.Body.Close(); err != nil {
-		log.Fatal(err.Error())
+	if data.Sys.Type == "Error" {
+		log.Fatalf("Error while fetching content types: %s: %s", data.Sys.ID, data.Message)
 	}
+
+	log.Printf("Fetched %d content types from %d", len(data.Items), data.Total)
 
 	models = data.Items
 
